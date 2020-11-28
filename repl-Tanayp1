@@ -1,0 +1,145 @@
+var score = 0;
+const chalk = require('chalk');
+
+var readlineSync = require('readline-sync');
+
+var userName = readlineSync.question(chalk.bold.cyan("Please enter your name ? "));
+
+userName = userName.toUpperCase();
+
+console.log(chalk.bgBlack.redBright.bold("\nHi "+chalk.underline.bold(" "+userName+" ")+", Welcome to the 'DO YOU KNOW Tanay ?' quiz. \n"));
+
+console.log(chalk.bold.bgBlack.redBright("THIS QUIZ CONSISTS OF QUESTIONS RELATED TO TANAY PRATAP 🙇‍♀️ "));
+
+
+
+var leaderBoard = {
+
+  topScorer1: {
+    name: "Tanay Pratap",
+    score: 5
+  },
+
+  topScorer2:{
+    name: "Akanksha",
+    score: 4
+  }
+
+}
+
+console.log(chalk.bgWhite.blackBright.bold("\nThe current leaderboard of the quiz: \n"))
+
+for(topScorer in leaderBoard)
+{
+  console.log(chalk.greenBright.bold(leaderBoard[topScorer].name)+chalk.bold(" with score of ")+chalk.redBright.bold(leaderBoard[topScorer].score+"\n"));
+}
+console.log("\n");
+
+var questions = {
+
+  questionOne : {
+    questionType : "YN",
+    question: "1. Is Tanay older than 25 or not ?\n",
+    answer: "y"
+  },
+
+  questionTwo : {
+    questionType : "text",
+    question: "2. Where does Tanay live? \n",
+    answer: "bangalore"
+  },
+
+  questionThree : {
+    questionType : "YN",
+    question: "3. Does Tanay work at Microsoft? \n",
+    answer: "microsoft"
+  },
+
+  questionFour : {
+    questionType : "text",
+    question: "Who is Tanay's favourite Comic SuperHero ? 🦇\n",
+    answer: "batman"
+  },
+
+  questionFive : {
+    questionType : "text",
+    question: "What does the name 'neog' stands for according to tanay ? .\n",
+    answer: "new generation programmers"
+  }
+    
+}
+
+
+//style the questions and correctness of answer.
+
+function verifyAnswer(question, answer, questionType)
+{
+  var userAnswer = '';
+  if(questionType==='YN')
+  {
+    userAnswer = readlineSync.keyInYNStrict(chalk.bold.yellowBright("\n"+question+"\n"));
+  }
+  else{
+    userAnswer = readlineSync.question(chalk.bold.yellowBright("\n"+question+"\n"));
+  }
+
+  if(questionType==='YN')
+  {
+    if(userAnswer)
+    {
+      console.log(chalk.greenBright.bold("\nCorrect Answer ! 🥳"));
+    score++;
+    }
+  }
+  else
+  {
+    if(answer===userAnswer.toLowerCase())
+    {
+    console.log(chalk.greenBright.bold("\nCorrect Answer ! 🥳"));
+    score++;
+    }
+    else{
+    console.log(chalk.redBright.bold("\nWrong Answer. 😐"));
+    }
+  }
+  console.log(chalk.blueBright.bold("\nScore: "+score));
+  console.log(chalk.bold.red("_______________________________________"));
+}
+
+
+for(question in questions)
+{
+  verifyAnswer(questions[question].question,questions [question].answer,questions[question].questionType);
+}
+
+if(score === 5)
+{
+  console.log(chalk.bold.greenBright("\n\nCongrats for ansering all answers correctly 🥳 "));
+}
+
+let leaderBoardFlag = true;
+
+for(highscorer in leaderBoard)
+{
+  if(leaderBoard[highscorer].score<score)
+  {
+    console.log(chalk.blueBright.bold("\nYou made it to the leaderBoard. 🥳\n"));
+    console.log(chalk.bold.blueBright("\nYou defeated "+leaderBoard[highscorer].name+".\n"));
+    leaderBoardFlag = false;
+    console.log(chalk.bold.blueBright("\nPlease send the screenshot of the score so that I can update the high score.\n"));
+     break;
+  }
+  if(leaderBoard[highscorer].score===score)
+  {
+    console.log(chalk.blueBright.bold("\nYou made it to the leaderBoard. 🥳"));
+    console.log(chalk.bold.blueBright("\nYou and "+leaderBoard[highscorer].name+" tied with the score: "+score+".\n"));
+    leaderBoardFlag = false;
+    console.log(chalk.bold.blueBright("\nPlease send the screenshot of the score so that I can update the high score.\n"));
+     break;
+  }
+}
+
+if(leaderBoardFlag)
+{
+  console.log(chalk.redBright.bold("\nYou didnt make to the leaderBoard. 😐"));
+}
