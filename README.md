@@ -2,4 +2,4 @@
 
 ## CLI quiz app
 
-Quiz to test your knowledge about Tanay Pratap.
+Quiz app to test your knowledge about Tanay Pratap.
